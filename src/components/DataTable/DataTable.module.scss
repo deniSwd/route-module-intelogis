@@ -1,4 +1,8 @@
 .dataTableWrap {
-  padding: 20px;
+  min-width: 800px;
+  padding: 10px;
   border: 1px solid lightgray;
+  .table{
+    overflow-x: auto;
+  }
 }

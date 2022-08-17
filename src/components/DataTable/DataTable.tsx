@@ -83,7 +83,7 @@ export const DataTable:FC = () =>{
           {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
         </span>
       </div>
-      <Table  size={"large"} rowSelection={rowSelection} columns={columns} dataSource={data} />
+      <Table  size={"large"} rowSelection={rowSelection} columns={columns} dataSource={data} className={s.table} />
     </div>
   )
 }

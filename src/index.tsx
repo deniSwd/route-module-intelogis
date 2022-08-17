@@ -5,6 +5,7 @@ import { store } from './app/store'
 import reportWebVitals from './reportWebVitals'
 import './index.css'
 import 'antd/dist/antd.css'
+import 'leaflet/dist/leaflet.css'
 import {App} from './App'
 
 const container = document.getElementById('root')!
