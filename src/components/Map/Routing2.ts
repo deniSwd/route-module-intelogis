@@ -1,4 +1,4 @@
-import {Routing, latLng} from 'leaflet'
+import { Routing, latLng} from 'leaflet'
 import {createControlComponent} from "@react-leaflet/core"
 import 'leaflet-routing-machine'
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
@@ -6,12 +6,12 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
 const createRoutineMachineLayer = () => {
   return  Routing.control({
     waypoints: [
-      latLng(33.52001088075479, 36.26829385757446),
-      latLng(33.50546582848033, 36.29547681726967),
-      latLng(33.60546582848033, 36.39547681726967),
+      latLng(33.53001088075479, 36.27829385757446),
+      latLng(33.51546582848033, 36.28547681726967),
+      latLng(33.61546582848033, 36.38547681726967),
     ],
     lineOptions: {
-      styles: [{ color: "red", weight: 4 }],
+      styles: [{ color: "green", weight: 4 }],
       extendToWaypoints: true,
       missingRouteTolerance: 0
     },
@@ -20,12 +20,12 @@ const createRoutineMachineLayer = () => {
     routeWhileDragging: true,
     fitSelectedRoutes: true,
     showAlternatives: false,
-    useZoomParameter:true,
+    useZoomParameter:true
   })
 }
 
-const RoutingMachine = createControlComponent(createRoutineMachineLayer);
+const RoutingMachine2 = createControlComponent(createRoutineMachineLayer);
 
-export default RoutingMachine;
+export default RoutingMachine2;
 
 
