@@ -1,35 +1,52 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from './store'
+import {Order, Orders, WayPoint, WayPoints} from '../MainTypes'
+import {DataType} from "../components/DataTable/DataTable";
 
-export interface CounterState {
-  value: number
+export interface dataTableState {
+  waypoints: Array<WayPoint>
+  orders: Array<Order>
+  displayingOrder: number
 }
 
-const initialState: CounterState = {
-  value: 0,
+const initialState: dataTableState = {
+  waypoints: [],
+  orders: [],
+  displayingOrder: 1
 };
 
 export const dataTableSlice = createSlice({
   name: 'dataTable',
   initialState,
   reducers: {
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
+    setWayPoints: (state, action: PayloadAction<WayPoints>) => {
+      state.waypoints = action.payload.waypoints
+    },
+    setOrders:(state, action: PayloadAction<Orders>) => {
+      state.orders = action.payload.orders
+    },
+    displayingOrder:(state, action: PayloadAction<number>) => {
+      state.displayingOrder = action.payload
     }
   }
 })
 
-export const { incrementByAmount } = dataTableSlice.actions
+const mapOrder = (state: RootState, order: Order) => order.children.map(ref => state.dataTable.waypoints.find(waypoint => waypoint.id === ref)?.location)
 
-export const selectCount = (state: RootState) => state.dataTable.value
+export const { setWayPoints, setOrders, displayingOrder } = dataTableSlice.actions
 
-/*export const incrementIfOdd =
-  (amount: number): AppThunk =>
-  (dispatch, getState) => {
-    const currentValue = selectCount(getState());
-    if (currentValue % 2 === 1) {
-      dispatch(incrementByAmount(amount));
-    }
-  }*/
+export const selectWayPoints = (state: RootState) => state.dataTable.waypoints
+export const selectDisplayingOrder = (state: RootState) => {
+  const order = state.dataTable.orders.find(v => state.dataTable.displayingOrder === v.key)!
+  if(!order) return
+  return {
+    ...order,
+    children: mapOrder(state, order)
+  }
+}
+export const selectOrders = (state: RootState) => state.dataTable.orders.map(order => ({
+  ...order,
+  children: mapOrder(state, order)
+}))
 
 export default dataTableSlice.reducer

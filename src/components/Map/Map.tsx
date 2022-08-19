@@ -1,21 +1,44 @@
-import React, {FC} from 'react'
+import React, {FC, useMemo} from 'react'
 import s from './Map.module.scss'
 import {MapContainer, TileLayer} from 'react-leaflet'
-import RoutingMachine from './Routing'
 import RoutingMachine2 from './Routing2'
+import {LatLng, latLng, Routing} from "leaflet";
+import {createControlComponent} from "@react-leaflet/core";
+import {useAppSelector} from "../../app/hooks";
+import {selectDisplayingOrder, selectOrders, selectWayPoints} from "../../app/dataTableSlice";
 
 export const Map: FC = () => {
+  const orders = useAppSelector(selectOrders)
+  const displayingOrder = useAppSelector(selectDisplayingOrder)
+
+  const WayRouting = useMemo(() => {
+    return createControlComponent(() => Routing.control({
+      waypoints: displayingOrder?.children.map(location => location && latLng(location[0], location[1])).filter(v => v) as LatLng[],
+      lineOptions: {
+        styles: [{color: "red", weight: 4}],
+        extendToWaypoints: true,
+        missingRouteTolerance: 0
+      },
+      show: false,
+      addWaypoints: false,
+      routeWhileDragging: true,
+      fitSelectedRoutes: true,
+      showAlternatives: false,
+      useZoomParameter: true,
+    }))
+  }, [orders, displayingOrder])
+
   return (
     <div className={s.mapWrap}>
       <MapContainer doubleClickZoom={false}
                     id="ma pId"
                     zoom={10}
-                    center={[33.5024, 36.2988]}
+                    center={[50.602783056213475, 36.61509644183513]}
                     style={{height: '738px'}}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-        <RoutingMachine />
+        <WayRouting/>
         <RoutingMachine2/>
       </MapContainer>
     </div>

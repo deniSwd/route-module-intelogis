@@ -1,14 +1,33 @@
-export type WayPoints = Array<WayPoint>
+export type WayPoints = {
+  waypoints: Array<WayPoint>
+}
 
 export type WayPoint = {
   id: number
   location: Array<number>
 }
 
-export type Orders = Array<Order>
+export type Orders = {
+  orders: Array<Order>
+}
 
 export type Order = {
+  key: number
   name: string
-  waypoints: Array<number>
+  children: Array<number>
   client: string
 }
+
+/*export type MappedOrder = {
+  key: number
+  name: string
+  children?: Array<[number, number] | undefined>
+  client: string
+}*/
+/*
+export type DataType= {
+  key: number
+  name: string
+  children: Array<[number, number]>
+  client: string
+}*/

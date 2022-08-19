@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {WayPoints} from '../MainTypes'
+import {Orders, WayPoints} from '../MainTypes'
 
 const instance = axios.create({
   baseURL: `/`
@@ -7,5 +7,8 @@ const instance = axios.create({
 export const userApi = {
   getWayPoints(): Promise<WayPoints> {
     return instance.get<WayPoints>(`wayPoints.json`).then(res => res.data)
+  },
+  getOrders(): Promise<Orders> {
+    return instance.get<Orders>(`orders.json`).then(res => res.data)
   }
 }

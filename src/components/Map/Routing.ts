@@ -1,4 +1,4 @@
-import {Routing, latLng} from 'leaflet'
+import {latLng, Routing} from 'leaflet'
 import {createControlComponent} from "@react-leaflet/core"
 import 'leaflet-routing-machine'
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
