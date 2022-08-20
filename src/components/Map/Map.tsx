@@ -35,7 +35,8 @@ export const Map: FC = () => {
                     id="ma pId"
                     zoom={10}
                     center={[50.602783056213475, 36.61509644183513]}
-                    style={{height: '738px'}}>
+                    style={{height: '738px'}}
+                    className={s.map}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>

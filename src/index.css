@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.gutter-horizontal {
+  width: 0;
+  height: 100%;
+  cursor: col-resize;
+  position: relative;
+}
+
+.gutter-horizontal:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+}

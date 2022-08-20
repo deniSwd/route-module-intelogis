@@ -18,13 +18,13 @@ const columns: ColumnsType<DataType> = [
   {
     title: 'Имя заявки',
     dataIndex: 'name',
-    width: '50%',
+    width: '35%',
     key: 'name',
   },
   {
     title: 'Клиент',
     dataIndex: 'client',
-    width: '50%',
+    width: '65%',
     key: 'client',
   },
 ];
@@ -70,6 +70,7 @@ export const DataTable: FC = () => {
         columns={columns}
         rowSelection={{...rowSelection, checkStrictly}}
         dataSource={tableData}
+        className={s.table}
       />
     </div>
   )
