@@ -31,8 +31,7 @@ export const dataTableSlice = createSlice({
   }
 })
 
-const mapOrder = (state: RootState, order: Order) => order.children.map(ref => state.dataTable.waypoints.find(waypoint => waypoint.id === ref)?.location)
-
+const mapOrder = (state: RootState, order: Order) => order.children.map(ref => state.dataTable.waypoints.find(waypoint => waypoint.id === ref))
 export const { setWayPoints, setOrders, displayingOrder } = dataTableSlice.actions
 
 export const selectWayPoints = (state: RootState) => state.dataTable.waypoints

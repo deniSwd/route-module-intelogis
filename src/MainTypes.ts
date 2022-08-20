@@ -4,6 +4,7 @@ export type WayPoints = {
 
 export type WayPoint = {
   id: number
+  name: string
   location: Array<number>
 }
 

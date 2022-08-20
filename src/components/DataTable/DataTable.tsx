@@ -5,11 +5,11 @@ import React, {FC, useMemo, useState} from 'react'
 import s from './DataTable.module.scss'
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {displayingOrder, selectOrders} from "../../app/dataTableSlice";
-import {Order} from "../../MainTypes";
+import {SelectField} from "./Select";
 
- export interface DataType {
+export interface DataType {
   key: React.ReactNode
-  name: string
+  name: string | React.ReactNode
   client: string
   children?: DataType[]
 }
@@ -33,14 +33,14 @@ const columns: ColumnsType<DataType> = [
 // rowSelection objects indicates the need for row selection
 
 export const DataTable: FC = () => {
-  const [checkStrictly, setCheckStrictly] = useState(false)
+  const [checkStrictly, setCheckStrictly] = useState(true)
   const dispatch = useAppDispatch()
 
   const orders = useAppSelector(selectOrders)
 
   const rowSelection: TableRowSelection<DataType> = {
     onChange: (selectedRowKeys, selectedRows) => {
-      // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
     onSelect: (record, selected, selectedRows) => {
       dispatch(displayingOrder(record.key as number))
@@ -53,10 +53,10 @@ export const DataTable: FC = () => {
   const tableData: DataType[] = useMemo(() => {
     return orders.map(order => ({
       ...order,
-      children: order.children.map((location, index) => ({
+      children: order.children.map((point, index) => ({
         key: `${order.key}${index}`,
-        name: ` Точка ${index}.`,
-        client: location?.join(' , ') ?? 'unknown'
+        name: <SelectField defaultValue={point?.name ?? 'unknown'}/>,
+        client: point?.location.join(' , ') ?? 'unknown'
       }))
     }))
   }, [orders])
@@ -66,6 +66,7 @@ export const DataTable: FC = () => {
         CheckStrictly: <Switch checked={checkStrictly} onChange={setCheckStrictly}/>
       </Space>
       <Table
+        size={"middle"}
         columns={columns}
         rowSelection={{...rowSelection, checkStrictly}}
         dataSource={tableData}
