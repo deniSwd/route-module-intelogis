@@ -2,9 +2,9 @@ import React, {FC, ReactNode, useEffect} from 'react'
 import s from './App.module.scss'
 import {DataTable} from './components/DataTable/DataTable'
 import {Map} from './components/Map/Map'
-import {useAppDispatch} from "./app/hooks";
-import {sagaActions} from "./app/saga";
-import Split from "react-split"
+import {useAppDispatch} from './app/hooks'
+import {sagaActions} from './app/saga'
+import Split from 'react-split'
 
 export const App: FC = () => {
   const dispatch = useAppDispatch()
@@ -15,7 +15,7 @@ export const App: FC = () => {
 
   return (
     <Split className={s.app}
-           minSize={[350, 450]}
+           minSize={[400, 450]}
            maxSize={[1440, 1440]}
            direction={'horizontal'}
            gutterSize={0}

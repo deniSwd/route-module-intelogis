@@ -1,51 +1,51 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {RootState} from './store'
-import {Order, Orders, WayPoint, WayPoints} from '../MainTypes'
-import {DataType} from "../components/DataTable/DataTable";
+import {Order, OrdersJSON, WayPoint, WayPointsJSON} from '../MainTypes'
 
 export interface dataTableState {
-  waypoints: Array<WayPoint>
-  orders: Array<Order>
-  displayingOrder: number
+  waypoints: WayPointsJSON
+  orders: OrdersJSON
+  displayingOrder: string
+  displayingWayPoint?: WayPoint
 }
 
 const initialState: dataTableState = {
-  waypoints: [],
-  orders: [],
-  displayingOrder: 1
+  waypoints: {},
+  orders: {},
+  displayingOrder: '0'
 };
 
 export const dataTableSlice = createSlice({
   name: 'dataTable',
   initialState,
   reducers: {
-    setWayPoints: (state, action: PayloadAction<WayPoints>) => {
-      state.waypoints = action.payload.waypoints
+    setWayPoints: (state, action: PayloadAction<WayPointsJSON>) => {
+      state.waypoints = action.payload
     },
-    setOrders:(state, action: PayloadAction<Orders>) => {
-      state.orders = action.payload.orders
+    setOrders: (state, action: PayloadAction<OrdersJSON>) => {
+      state.orders = action.payload
     },
-    displayingOrder:(state, action: PayloadAction<number>) => {
+    displayingOrder: (state, action: PayloadAction<string>) => {
       state.displayingOrder = action.payload
+    },
+    updateOrderWaypoints: (state, action: PayloadAction<{ value: string, defaultValue: string, orderId:string }>) => {
+      const { orderId } = action.payload
+      state.orders[orderId] = state.orders[orderId].map(ref =>
+        ref === +action.payload.defaultValue ? +action.payload.value : ref)
+    },
+    displayingWaypoint: (state, action: PayloadAction<string>) => {
+      state.displayingWayPoint = state.waypoints[action.payload]
+    },
+    resetDisplayingWaypoint: (state) => {
+      delete state.displayingWayPoint
     }
   }
 })
 
-const mapOrder = (state: RootState, order: Order) => order.children.map(ref => state.dataTable.waypoints.find(waypoint => waypoint.id === ref))
-export const { setWayPoints, setOrders, displayingOrder } = dataTableSlice.actions
+export const {setWayPoints, setOrders, displayingOrder, updateOrderWaypoints, displayingWaypoint, resetDisplayingWaypoint} = dataTableSlice.actions
 
-export const selectWayPoints = (state: RootState) => state.dataTable.waypoints
-export const selectDisplayingOrder = (state: RootState) => {
-  const order = state.dataTable.orders.find(v => state.dataTable.displayingOrder === v.key)!
-  if(!order) return
-  return {
-    ...order,
-    children: mapOrder(state, order)
-  }
-}
-export const selectOrders = (state: RootState) => state.dataTable.orders.map(order => ({
-  ...order,
-  children: mapOrder(state, order)
-}))
-
+export const selectWaypoints = (state: RootState) => state.dataTable.waypoints
+export const selectDisplayingOrder = (state: RootState) => state.dataTable.displayingOrder
+export const selectOrders = (state: RootState) => state.dataTable.orders
+export const selectDisplayingWaypoint = (state: RootState) => state.dataTable.displayingWayPoint
 export default dataTableSlice.reducer

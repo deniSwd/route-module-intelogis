@@ -1,22 +1,18 @@
-export type WayPoints = {
-  waypoints: Array<WayPoint>
-}
+import React from "react";
 
-export type WayPoint = {
-  id: number
-  name: string
-  location: Array<number>
-}
+export type WayPointsJSON = Record<string, WayPoint>
 
-export type Orders = {
-  orders: Array<Order>
-}
+export type WayPoint = [number, number]
 
-export type Order = {
-  key: number
-  name: string
-  children: Array<number>
-  client: string
+export type OrdersJSON = Record<string, Order>
+
+export type Order = number[]
+
+export interface TableType {
+  key: React.ReactNode
+  name: string | React.ReactNode
+  point: string
+  children?: TableType[]
 }
 
 /*export type MappedOrder = {
