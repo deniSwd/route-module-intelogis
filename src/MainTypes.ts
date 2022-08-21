@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export type WayPointsJSON = Record<string, WayPoint>
 
@@ -15,16 +15,4 @@ export interface TableType {
   children?: TableType[]
 }
 
-/*export type MappedOrder = {
-  key: number
-  name: string
-  children?: Array<[number, number] | undefined>
-  client: string
-}*/
-/*
-export type DataType= {
-  key: number
-  name: string
-  children: Array<[number, number]>
-  client: string
-}*/
+

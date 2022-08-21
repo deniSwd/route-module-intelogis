@@ -1,11 +1,11 @@
-import {Select} from 'antd'
-import React, {FC} from 'react'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import { Select } from 'antd'
+import React, { FC } from 'react'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   updateOrderWaypoints,
   selectWaypoints,
-} from '../../app/dataTableSlice'
-import {Order} from "../../MainTypes";
+} from '../../store/dataTableSlice'
+import { Order } from '../../MainTypes'
 
 export type SelectedFieldProps = {
   defaultValue: string
@@ -13,16 +13,16 @@ export type SelectedFieldProps = {
   order: Order
 }
 
-const {Option} = Select
+const { Option } = Select
 
-export const SelectField: FC<SelectedFieldProps> = ({defaultValue, orderId, order}) => {
+export const SelectField: FC<SelectedFieldProps> = ({ defaultValue, orderId, order }) => {
   const wayPoints = useAppSelector(selectWaypoints)
   const dispatch = useAppDispatch()
   const handleChange = (value: string) => {
-    dispatch(updateOrderWaypoints({value, defaultValue, orderId}))
+    dispatch(updateOrderWaypoints({ value, defaultValue, orderId }))
   }
   return (
-    <Select defaultValue={defaultValue} style={{width: 120}} onChange={handleChange}>
+    <Select defaultValue={defaultValue} style={{ width: 120 }} onChange={handleChange}>
       {Object.entries(wayPoints).filter(([id]) =>
         !order.includes(+id) || defaultValue === id).map(([id, waypoint], index) =>
         <Option value={id} key={id + index}>Точка {id}</Option>)}

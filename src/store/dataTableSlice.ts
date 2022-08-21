@@ -1,6 +1,6 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {RootState} from './store'
-import {Order, OrdersJSON, WayPoint, WayPointsJSON} from '../MainTypes'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from './store'
+import { OrdersJSON, WayPoint, WayPointsJSON } from '../MainTypes'
 
 export interface dataTableState {
   waypoints: WayPointsJSON
@@ -12,8 +12,8 @@ export interface dataTableState {
 const initialState: dataTableState = {
   waypoints: {},
   orders: {},
-  displayingOrder: '0'
-};
+  displayingOrder: '0',
+}
 
 export const dataTableSlice = createSlice({
   name: 'dataTable',
@@ -28,7 +28,7 @@ export const dataTableSlice = createSlice({
     displayingOrder: (state, action: PayloadAction<string>) => {
       state.displayingOrder = action.payload
     },
-    updateOrderWaypoints: (state, action: PayloadAction<{ value: string, defaultValue: string, orderId:string }>) => {
+    updateOrderWaypoints: (state, action: PayloadAction<{ value: string, defaultValue: string, orderId: string }>) => {
       const { orderId } = action.payload
       state.orders[orderId] = state.orders[orderId].map(ref =>
         ref === +action.payload.defaultValue ? +action.payload.value : ref)
@@ -38,11 +38,18 @@ export const dataTableSlice = createSlice({
     },
     resetDisplayingWaypoint: (state) => {
       delete state.displayingWayPoint
-    }
-  }
+    },
+  },
 })
 
-export const {setWayPoints, setOrders, displayingOrder, updateOrderWaypoints, displayingWaypoint, resetDisplayingWaypoint} = dataTableSlice.actions
+export const {
+  setWayPoints,
+  setOrders,
+  displayingOrder,
+  updateOrderWaypoints,
+  displayingWaypoint,
+  resetDisplayingWaypoint,
+} = dataTableSlice.actions
 
 export const selectWaypoints = (state: RootState) => state.dataTable.waypoints
 export const selectDisplayingOrder = (state: RootState) => state.dataTable.displayingOrder
